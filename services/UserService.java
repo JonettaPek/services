@@ -3,7 +3,6 @@ package com.fdmgroup.restservice.services;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -40,4 +39,11 @@ public class UserService {
 		users.add(newUser);
 		return newUser;
 	}
+	
+	public void delete(final int id) throws UserNotFoundException {
+		if (!users.removeIf(u -> u.getId() == id)) {
+			throw new UserNotFoundException("Invalid user id");
+		}
+	}
+	
 }
