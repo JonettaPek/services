@@ -2,10 +2,19 @@ package com.fdmgroup.restservice.dao;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+
 public class User {
 
+	@PositiveOrZero
 	private long id;
+	
+	@Size(min=2, message="name must have at least 2 characters")
 	private String name;
+	
+	@Past(message="birthdate must be in the past")
 	private LocalDate birthdate;
 	
 	public User(final long id, final String name, final LocalDate birthdate) {
