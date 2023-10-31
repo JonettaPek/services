@@ -41,10 +41,7 @@ public class UserResource {
 	public MappingJacksonValue getAllUsers() {
 		List<User> allUsers = userService.findAll();
 		MappingJacksonValue mjv = new MappingJacksonValue(allUsers);
-		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("name", "birthdate");
-		FilterProvider filters = new SimpleFilterProvider().addFilter("IdFilter", filter);
-		mjv.setFilters(filters);
-		return mjv;
+		return createFilterProvider(mjv, "IdFilter", "name", "birthdate");
 	}
 	
 	@GetMapping(path="/static-users/{id}")
@@ -69,5 +66,12 @@ public class UserResource {
 	@DeleteMapping(path="/static-users/{id}")
 	public void deleteUser(@PathVariable final int id) throws UserNotFoundException {
 		userService.delete(id);
+	}
+	
+	private static MappingJacksonValue createFilterProvider(MappingJacksonValue mjv, String filterName, String... fields) {
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept(fields);
+		FilterProvider filters = new SimpleFilterProvider().addFilter(filterName, filter);
+		mjv.setFilters(filters);
+		return mjv;
 	}
 }
