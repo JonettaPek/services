@@ -6,15 +6,18 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
+//@JsonIgnoreProperties({"name", "birth_Sdate"})
 public class User {
 
 	@PositiveOrZero
+//	@JsonIgnore // static filtering
 	private long id;
 	
 	@Size(min=2, message="name must have at least 2 characters")
 	private String name;
 	
 	@Past(message="birthdate must be in the past")
+//	@JsonProperty("birth_date")
 	private LocalDate birthdate;
 	
 	public User(final long id, final String name, final LocalDate birthdate) {
