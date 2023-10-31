@@ -2,11 +2,14 @@ package com.fdmgroup.restservice.dao;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
 //@JsonIgnoreProperties({"name", "birth_Sdate"})
+@JsonFilter("IdFilter")
 public class User {
 
 	@PositiveOrZero

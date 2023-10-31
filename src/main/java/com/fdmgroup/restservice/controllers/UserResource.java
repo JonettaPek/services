@@ -1,7 +1,7 @@
 package com.fdmgroup.restservice.controllers;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.net.URI;
 import java.util.List;
@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fdmgroup.restservice.dao.User;
 import com.fdmgroup.restservice.exceptions.UserNotFoundException;
 import com.fdmgroup.restservice.services.UserService;
@@ -34,8 +38,13 @@ public class UserResource {
 	}
 	
 	@GetMapping(path="/static-users")
-	public List<User> getAllUsers() {
-		return userService.findAll();
+	public MappingJacksonValue getAllUsers() {
+		List<User> allUsers = userService.findAll();
+		MappingJacksonValue mjv = new MappingJacksonValue(allUsers);
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("name", "birthdate");
+		FilterProvider filters = new SimpleFilterProvider().addFilter("IdFilter", filter);
+		mjv.setFilters(filters);
+		return mjv;
 	}
 	
 	@GetMapping(path="/static-users/{id}")
