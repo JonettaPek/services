@@ -9,7 +9,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
 //@JsonIgnoreProperties({"name", "birth_Sdate"})
-@JsonFilter("IdFilter")
+//@JsonFilter("IdFilter")
 public class User {
 
 	@PositiveOrZero
