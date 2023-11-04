@@ -1,4 +1,4 @@
-package com.fdmgroup.learnjpaandhibernate.dao;
+package com.fdmgroup.springdatajpa.dao;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

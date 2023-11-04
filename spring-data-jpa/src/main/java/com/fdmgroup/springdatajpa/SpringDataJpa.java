@@ -1,13 +1,13 @@
-package com.fdmgroup.learnjpaandhibernate;
+package com.fdmgroup.springdatajpa;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LearnJpaAndHibernateApplication {
+public class SpringDataJpa {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LearnJpaAndHibernateApplication.class, args);
+		SpringApplication.run(SpringDataJpa.class, args);
 	}
 
 }

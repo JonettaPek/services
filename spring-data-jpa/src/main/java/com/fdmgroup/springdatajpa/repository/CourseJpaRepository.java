@@ -1,8 +1,8 @@
-package com.fdmgroup.learnjpaandhibernate.repository;
+package com.fdmgroup.springdatajpa.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.fdmgroup.learnjpaandhibernate.dao.Course;
+import com.fdmgroup.springdatajpa.dao.Course;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

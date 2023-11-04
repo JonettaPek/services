@@ -1,3 +1,4 @@
+package com.fdmgroup.springdatajpa.runner;
 //package com.fdmgroup.learnjpaandhibernate.runner;
 //
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -5,13 +6,13 @@
 //import org.springframework.stereotype.Component;
 //
 //import com.fdmgroup.learnjpaandhibernate.dao.Course;
-//import com.fdmgroup.learnjpaandhibernate.repository.CourseJpaRepository;
+//import com.fdmgroup.learnjpaandhibernate.repository.CourseSpringJdbcRepository;
 //
 //@Component
-//public class CourseJpaRunner implements CommandLineRunner {
+//public class CourseSpringJdbcRunner implements CommandLineRunner {
 //
 //	@Autowired
-//	private CourseJpaRepository repository;
+//	private CourseSpringJdbcRepository repository;
 //	
 //	@Override
 //	public void run(String... args) throws Exception {

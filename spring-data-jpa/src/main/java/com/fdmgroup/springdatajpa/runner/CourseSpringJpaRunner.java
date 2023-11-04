@@ -1,11 +1,11 @@
-package com.fdmgroup.learnjpaandhibernate.runner;
+package com.fdmgroup.springdatajpa.runner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.fdmgroup.learnjpaandhibernate.dao.Course;
-import com.fdmgroup.learnjpaandhibernate.repository.CourseSpringJpaRepository;
+import com.fdmgroup.springdatajpa.dao.Course;
+import com.fdmgroup.springdatajpa.repository.CourseSpringJpaRepository;
 
 @Component
 public class CourseSpringJpaRunner implements CommandLineRunner {

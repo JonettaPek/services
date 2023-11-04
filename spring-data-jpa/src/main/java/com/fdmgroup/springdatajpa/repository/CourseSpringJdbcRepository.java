@@ -1,11 +1,11 @@
-package com.fdmgroup.learnjpaandhibernate.repository;
+package com.fdmgroup.springdatajpa.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.fdmgroup.learnjpaandhibernate.dao.Course;
+import com.fdmgroup.springdatajpa.dao.Course;
 
 @Repository
 public class CourseSpringJdbcRepository {
