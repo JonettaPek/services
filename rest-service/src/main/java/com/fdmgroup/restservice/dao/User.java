@@ -2,16 +2,20 @@ package com.fdmgroup.restservice.dao;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
 //@JsonIgnoreProperties({"name", "birth_Sdate"})
 //@JsonFilter("IdFilter")
+@Entity(name="user_details")
 public class User {
 
+	@Id
+	@GeneratedValue
 	@PositiveOrZero
 //	@JsonIgnore // static filtering
 	private long id;
