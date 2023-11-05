@@ -23,30 +23,30 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fdmgroup.restservice.dao.User;
 import com.fdmgroup.restservice.exceptions.UserNotFoundException;
-import com.fdmgroup.restservice.services.UserService;
+import com.fdmgroup.restservice.services.UserStaticService;
 
 import jakarta.validation.Valid;
 
 @RestController
-public class UserResource {
+public class UserStaticResource {
 
-	private UserService userService;
+	private UserStaticService userStaticService;
 	
-	public UserResource(final UserService userService) {
+	public UserStaticResource(final UserStaticService userService) {
 		super();
-		this.userService = userService;
+		this.userStaticService = userService;
 	}
 	
 	@GetMapping(path="/static-users")
 	public MappingJacksonValue getAllUsers() {
-		List<User> allUsers = userService.findAll();
+		List<User> allUsers = userStaticService.findAll();
 		MappingJacksonValue mjv = new MappingJacksonValue(allUsers);
 		return createFilterProvider(mjv, "IdFilter", "name", "birthdate");
 	}
 	
 	@GetMapping(path="/static-users/{id}")
 	public EntityModel<User> getUser(@PathVariable final int id) throws UserNotFoundException {
-		EntityModel<User> entityModel = EntityModel.of(userService.find(id));
+		EntityModel<User> entityModel = EntityModel.of(userStaticService.find(id));
 		WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).getAllUsers());
 		entityModel.add(link.withRel("all-users"));
 		return entityModel;
@@ -54,7 +54,7 @@ public class UserResource {
 	
 	@PostMapping(path="/static-users")
 	public ResponseEntity<User> createUser(@Valid @RequestBody User newUser) {
-		User savedUser = userService.save(newUser);
+		User savedUser = userStaticService.save(newUser);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
@@ -65,7 +65,7 @@ public class UserResource {
 	
 	@DeleteMapping(path="/static-users/{id}")
 	public void deleteUser(@PathVariable final int id) throws UserNotFoundException {
-		userService.delete(id);
+		userStaticService.delete(id);
 	}
 	
 	private static MappingJacksonValue createFilterProvider(MappingJacksonValue mjv, String filterName, String... fields) {

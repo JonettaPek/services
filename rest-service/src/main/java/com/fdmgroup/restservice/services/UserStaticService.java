@@ -10,7 +10,7 @@ import com.fdmgroup.restservice.dao.User;
 import com.fdmgroup.restservice.exceptions.UserNotFoundException;
 
 @Service
-public class UserService {
+public class UserStaticService {
 
 	private static List<User> users = new ArrayList<>();
 	
