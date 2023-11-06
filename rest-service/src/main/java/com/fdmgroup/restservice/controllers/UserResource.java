@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.fdmgroup.restservice.dao.Post;
 import com.fdmgroup.restservice.dao.User;
 import com.fdmgroup.restservice.exceptions.UserNotFoundException;
+import com.fdmgroup.restservice.repositories.PostRepository;
 import com.fdmgroup.restservice.repositories.UserRepository;
 
 import jakarta.validation.Valid;
@@ -29,21 +31,24 @@ import jakarta.validation.Valid;
 public class UserResource {
 
 	@Autowired
-	UserRepository repository;
+	private UserRepository userRepository;
+	
+	private PostRepository postRepository;
 
-	public UserResource(UserRepository repository) {
+	public UserResource(UserRepository userRepository, PostRepository postRepository) {
 		super();
-		this.repository = repository;
+		this.userRepository = userRepository;
+		this.postRepository = postRepository;
 	}
 	
 	@GetMapping(path="/users")
 	public List<User> getAllUsers() {
-		return repository.findAll();
+		return userRepository.findAll();
 	}
 	
 	@GetMapping(path="/users/{id}")
 	public EntityModel<User> getUser(@PathVariable final long id) throws UserNotFoundException {
-		Optional<User> user = repository.findById(id);
+		Optional<User> user = userRepository.findById(id);
 		if (user.isEmpty()) {
 			throw new UserNotFoundException("Invalid user id");
 		}
@@ -55,7 +60,7 @@ public class UserResource {
 	
 	@PostMapping(path="/users")
 	public ResponseEntity<User> createUser(@Valid @RequestBody User newUser) {
-		User savedUser = repository.save(newUser);
+		User savedUser = userRepository.save(newUser);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
@@ -66,6 +71,31 @@ public class UserResource {
 	
 	@DeleteMapping(path="/users/{id}")
 	public void deleteUser(@PathVariable final long id) throws UserNotFoundException {
-		repository.deleteById(id);
+		userRepository.deleteById(id);
+	}
+	
+	@GetMapping(path="/users/{id}/posts")
+	public List<Post> getUserPosts(@PathVariable final long id) throws UserNotFoundException {
+		Optional<User> user = userRepository.findById(id);
+		if (user.isEmpty()) {
+			throw new UserNotFoundException("Invalid user id");
+		}
+		return user.get().getPosts();
+	}
+	
+	@PostMapping(path="/users/{id}/posts")
+	public ResponseEntity<Post> createUserPost(@PathVariable final long id, @Valid @RequestBody final Post post) throws UserNotFoundException {
+		Optional<User> user = userRepository.findById(id);
+		if (user.isEmpty()) {
+			throw new UserNotFoundException("Invalid user id");
+		}
+		post.setUser(user.get());
+		Post savedPost =postRepository.save(post);
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(savedPost.getId())
+				.toUri();
+		return ResponseEntity.created(location).build();
 	}
 }
