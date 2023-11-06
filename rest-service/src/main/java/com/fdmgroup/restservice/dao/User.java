@@ -58,6 +58,10 @@ public class User {
 		return birthdate;
 	}
 	
+	public List<Post> getPosts() {
+		return this.posts;
+	}
+	
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -68,6 +72,10 @@ public class User {
 	
 	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
+	}
+	
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
 	@Override
