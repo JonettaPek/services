@@ -2,12 +2,20 @@ package com.fdmgroup.microservices.currencyexchangeservice.dao;
 
 import java.math.BigDecimal;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class CurrencyExchange {
 
+	@Id
 	private Long id;
 	
+	@Column(name = "fromCurrency")
 	private String from;
 	
+	@Column(name = "toCurrency")
 	private String to;
 	
 	private BigDecimal conversionMultiple;
