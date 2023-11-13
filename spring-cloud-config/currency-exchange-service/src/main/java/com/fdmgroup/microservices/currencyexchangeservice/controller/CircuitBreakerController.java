@@ -15,12 +15,16 @@ public class CircuitBreakerController {
 	private Logger logger = LoggerFactory.getLogger(CircuitBreakerController.class);
 	
 	@GetMapping(path = "/sample-api")
-	@Retry(name = "sample-api") // default attempts thrice
+	@Retry(name = "sample-api", fallbackMethod = "fallbackMethod") // default attempts thrice
 	public String sampleApi() {
 		logger.info("called sample api");
 		ResponseEntity<String> entity = 
 				new RestTemplate()
 					.getForEntity("http://localhost:8080/dummy-uri", String.class);
 		return entity.getBody();
+	}
+	
+	private String fallbackMethod(Exception exception) {
+		return "fallback-method";
 	}
 }
