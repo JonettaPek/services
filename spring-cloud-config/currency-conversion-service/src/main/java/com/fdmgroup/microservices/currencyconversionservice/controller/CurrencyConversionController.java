@@ -53,6 +53,7 @@ public class CurrencyConversionController {
 		CurrencyConversion currencyConversion = currencyExchangeProxy.getExchangeRate(fromCurrency, toCurrency);
 		currencyConversion.setQuantity(quantity);
 		currencyConversion.setTotalCalculatedAmount(quantity.multiply(currencyConversion.getConversionMultiple()));
+		currencyConversion.setEnvironment(currencyConversion.getEnvironment() + " feign");
 		return currencyConversion;
 		
 	}
